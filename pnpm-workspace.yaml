@@ -1,0 +1,11 @@
+
+allowBuilds:
+  "@firebase/util": true
+  protobufjs: true
+  "@everybenefits/shared": true
+  esbuild: true
+  "@parcel/watcher": true
+  "@swc/core": true
+  sharp: true
+  unrs-resolver: true
+
