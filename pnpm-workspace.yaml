@@ -1,3 +1,6 @@
+overrides:
+  # GHSA / Dependabot: uuid buffer bounds in v3/v5/v6 (<11.1.1)
+  uuid: "^11.1.1"
 allowBuilds:
   "@firebase/util": true
   protobufjs: true
@@ -7,3 +10,4 @@ allowBuilds:
   "@swc/core": true
   sharp: true
   unrs-resolver: true
+  '@everybenefits/shared@https://codeload.github.com/everybenefits/pulse-shared/tar.gz/ba518195f475c8475b4a2d71c64f8931b9dbe76c': set this to true or false
