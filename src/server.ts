@@ -266,7 +266,18 @@ export function createOidcServer(deps: OidcServerDeps) {
       };
     }
 
-    if (req.codeChallenge && req.codeChallengeMethod !== "S256") {
+    if (!req.codeChallenge) {
+      return {
+        ok: false,
+        errorRedirect: oauthErrorRedirect(
+          req.redirectUri,
+          "invalid_request",
+          "code_challenge is required (PKCE S256).",
+          req.state,
+        ),
+      };
+    }
+    if (req.codeChallengeMethod !== "S256") {
       return {
         ok: false,
         errorRedirect: oauthErrorRedirect(
@@ -477,15 +488,21 @@ export function createOidcServer(deps: OidcServerDeps) {
     const storedChallenge = data.codeChallenge
       ? String(data.codeChallenge)
       : null;
-    if (storedChallenge) {
-      if (!codeVerifier || !verifyPkceS256(codeVerifier, storedChallenge)) {
-        throw new OidcHttpError(
-          400,
-          "invalid_grant",
-          "PKCE verification failed.",
-          "invalid_grant",
-        );
-      }
+    if (!storedChallenge) {
+      throw new OidcHttpError(
+        400,
+        "invalid_grant",
+        "Authorization code was not issued with PKCE.",
+        "invalid_grant",
+      );
+    }
+    if (!codeVerifier || !verifyPkceS256(codeVerifier, storedChallenge)) {
+      throw new OidcHttpError(
+        400,
+        "invalid_grant",
+        "PKCE verification failed.",
+        "invalid_grant",
+      );
     }
 
     const uid = String(data.uid ?? "");

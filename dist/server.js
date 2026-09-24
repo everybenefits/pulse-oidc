@@ -176,7 +176,13 @@ function createOidcServer(deps) {
                 errorRedirect: (0, errors_1.oauthErrorRedirect)(req.redirectUri, "unsupported_response_type", "Only response_type=code is supported.", req.state),
             };
         }
-        if (req.codeChallenge && req.codeChallengeMethod !== "S256") {
+        if (!req.codeChallenge) {
+            return {
+                ok: false,
+                errorRedirect: (0, errors_1.oauthErrorRedirect)(req.redirectUri, "invalid_request", "code_challenge is required (PKCE S256).", req.state),
+            };
+        }
+        if (req.codeChallengeMethod !== "S256") {
             return {
                 ok: false,
                 errorRedirect: (0, errors_1.oauthErrorRedirect)(req.redirectUri, "invalid_request", "Only code_challenge_method=S256 is supported.", req.state),
@@ -303,10 +309,11 @@ function createOidcServer(deps) {
         const storedChallenge = data.codeChallenge
             ? String(data.codeChallenge)
             : null;
-        if (storedChallenge) {
-            if (!codeVerifier || !(0, crypto_1.verifyPkceS256)(codeVerifier, storedChallenge)) {
-                throw new errors_1.OidcHttpError(400, "invalid_grant", "PKCE verification failed.", "invalid_grant");
-            }
+        if (!storedChallenge) {
+            throw new errors_1.OidcHttpError(400, "invalid_grant", "Authorization code was not issued with PKCE.", "invalid_grant");
+        }
+        if (!codeVerifier || !(0, crypto_1.verifyPkceS256)(codeVerifier, storedChallenge)) {
+            throw new errors_1.OidcHttpError(400, "invalid_grant", "PKCE verification failed.", "invalid_grant");
         }
         const uid = String(data.uid ?? "");
         await assertActiveConsumer(uid);

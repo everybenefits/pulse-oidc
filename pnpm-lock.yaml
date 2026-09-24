@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@everybenefits/shared':
-        specifier: github:everybenefits/pulse-shared#v0.1.0
-        version: https://codeload.github.com/everybenefits/pulse-shared/tar.gz/4aaf81b088f6c44ad530a2f7522cfc1c47303066
+        specifier: github:everybenefits/pulse-shared#v0.1.2
+        version: https://codeload.github.com/everybenefits/pulse-shared/tar.gz/ba518195f475c8475b4a2d71c64f8931b9dbe76c
       jose:
         specifier: ^6.0.11
         version: 6.2.12
@@ -27,9 +27,9 @@ importers:
 
 packages:
 
-  '@everybenefits/shared@https://codeload.github.com/everybenefits/pulse-shared/tar.gz/4aaf81b088f6c44ad530a2f7522cfc1c47303066':
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/everybenefits/pulse-shared/tar.gz/4aaf81b088f6c44ad530a2f7522cfc1c47303066}
-    version: 0.1.0
+  '@everybenefits/shared@https://codeload.github.com/everybenefits/pulse-shared/tar.gz/ba518195f475c8475b4a2d71c64f8931b9dbe76c':
+    resolution: {gitHosted: true, integrity: sha512-uXPm4sIWBmUSR5vIqo/54IDV4bGT/xN1m6VKoNd2IC/LEcq9f7Lj9puT6mnd0gfqUG4WlO3hcEwiamu2ESvVSA==, tarball: https://codeload.github.com/everybenefits/pulse-shared/tar.gz/ba518195f475c8475b4a2d71c64f8931b9dbe76c}
+    version: 0.1.2
 
   '@fastify/busboy@3.2.2':
     resolution: {integrity: sha512-yXSS27qPExaXeuLvMRMXOLtpipzfQYNjG3FkunDWKGfMYjKuhFXko9CVzqxm8jcF+lmtS9Fd89QNdh9XDjnbNg==}
@@ -1117,7 +1117,7 @@ packages:
 
 snapshots:
 
-  '@everybenefits/shared@https://codeload.github.com/everybenefits/pulse-shared/tar.gz/4aaf81b088f6c44ad530a2f7522cfc1c47303066':
+  '@everybenefits/shared@https://codeload.github.com/everybenefits/pulse-shared/tar.gz/ba518195f475c8475b4a2d71c64f8931b9dbe76c':
     dependencies:
       zod: 4.6.5
 

@@ -1,6 +1,6 @@
 {
   "name": "@everybenefits/oidc",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -28,7 +28,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@everybenefits/shared": "github:everybenefits/pulse-shared#v0.1.0",
+    "@everybenefits/shared": "github:everybenefits/pulse-shared#v0.1.2",
     "jose": "^6.0.11"
   },
   "peerDependencies": {
