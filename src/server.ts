@@ -165,6 +165,16 @@ export function createOidcServer(deps: OidcServerDeps) {
   async function loadClient(
     clientId: string,
   ): Promise<OidcClientRecord | null> {
+    // Treat malformed public input as an unknown client before constructing a
+    // Firestore path. In particular, a slash would become a nested path.
+    if (
+      !clientId ||
+      clientId.includes("/") ||
+      clientId === "." ||
+      clientId === ".." ||
+      /^__.*__$/.test(clientId) ||
+      Buffer.byteLength(clientId, "utf8") > 1500
+    ) return null;
     const snap = await deps
       .db()
       .collection(OIDC_CLIENTS_COLLECTION)
@@ -446,6 +456,7 @@ export function createOidcServer(deps: OidcServerDeps) {
     if (
       code.length < CODE_MIN_LEN ||
       code.length > CODE_MAX_LEN ||
+      !/^[A-Za-z0-9_-]+$/.test(code) ||
       !redirectUri
     ) {
       throw new OidcHttpError(

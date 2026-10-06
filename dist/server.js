@@ -106,6 +106,15 @@ function createOidcServer(deps) {
         }
     }
     async function loadClient(clientId) {
+        // Treat malformed public input as an unknown client before constructing a
+        // Firestore path. In particular, a slash would become a nested path.
+        if (!clientId ||
+            clientId.includes("/") ||
+            clientId === "." ||
+            clientId === ".." ||
+            /^__.*__$/.test(clientId) ||
+            Buffer.byteLength(clientId, "utf8") > 1500)
+            return null;
         const snap = await deps
             .db()
             .collection(constants_1.OIDC_CLIENTS_COLLECTION)
@@ -288,6 +297,7 @@ function createOidcServer(deps) {
         const codeVerifier = body.get("code_verifier");
         if (code.length < constants_1.CODE_MIN_LEN ||
             code.length > constants_1.CODE_MAX_LEN ||
+            !/^[A-Za-z0-9_-]+$/.test(code) ||
             !redirectUri) {
             throw new errors_1.OidcHttpError(400, "invalid_grant", "code and redirect_uri are required.", "invalid_grant");
         }

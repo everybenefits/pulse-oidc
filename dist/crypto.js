@@ -134,11 +134,17 @@ async function verifyAccessToken(token, key, issuer) {
     const { payload } = await (0, jose_1.jwtVerify)(token, pub, {
         issuer,
         algorithms: ["RS256"],
+        typ: "at+jwt",
     });
-    const uid = String(payload.sub ?? "");
-    const scope = String(payload.scope ?? "");
-    const clientId = String(payload.client_id ?? "");
-    if (!uid)
-        throw new Error("missing sub");
+    // ID tokens use the same issuer/key but must never authorize UserInfo calls.
+    if (payload.token_use !== "access" ||
+        typeof payload.sub !== "string" || !payload.sub ||
+        typeof payload.scope !== "string" || !payload.scope ||
+        typeof payload.client_id !== "string" || !payload.client_id ||
+        payload.aud !== payload.client_id)
+        throw new Error("invalid access token claims");
+    const uid = payload.sub;
+    const scope = payload.scope;
+    const clientId = payload.client_id;
     return { uid, scope, clientId };
 }
