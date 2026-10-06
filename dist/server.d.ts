@@ -25,14 +25,14 @@ export declare function createOidcServer(deps: OidcServerDeps): {
         response_types_supported: string[];
         subject_types_supported: string[];
         id_token_signing_alg_values_supported: string[];
-        scopes_supported: ("email" | "openid" | "profile" | "phone")[];
+        scopes_supported: ("email" | "openid" | "phone" | "profile")[];
         token_endpoint_auth_methods_supported: string[];
         claims_supported: string[];
         code_challenge_methods_supported: string[];
         grant_types_supported: string[];
     }>;
     getJwks: () => Promise<{
-        keys: import("jose").JWK[];
+        keys: import("jose", { with: { "resolution-mode": "import" } }).JWK[];
     }>;
     getPlatformKid: () => Promise<string>;
     parseAuthorizeQuery: typeof parseAuthorizeQuery;

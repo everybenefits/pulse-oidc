@@ -1,6 +1,12 @@
 overrides:
   # GHSA / Dependabot: uuid buffer bounds in v3/v5/v6 (<11.1.1)
   uuid: "^11.1.1"
+  # Dependabot: grpc-js unauthorized certs via getAuthContext (<1.13.6)
+  "@grpc/grpc-js@<1.13.6": "^1.13.6"
+  # Dependabot: source-map-js event-loop DoS (<1.2.2)
+  "source-map-js@<1.2.2": "^1.2.2"
+  # Dependabot: sharp librsvg CVE-2026-96889 (<0.35.5)
+  "sharp@<0.35.5": "^0.35.5"
 allowBuilds:
   "@firebase/util": true
   protobufjs: true
@@ -11,3 +17,4 @@ allowBuilds:
   sharp: true
   unrs-resolver: true
   "@everybenefits/shared@https://codeload.github.com/everybenefits/pulse-shared/tar.gz/ba518195f475c8475b4a2d71c64f8931b9dbe76c": false
+  "@everybenefits/shared@https://codeload.github.com/everybenefits/pulse-shared/tar.gz/47e942d4e7d20b61937de3d5946315e0376fa15b": false
